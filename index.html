@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kosher Protein Planner</title>
+  <meta name="description" content="A personal weekly meal planner for affordable kosher meals with at least 100 g of protein a day.">
+  <meta name="theme-color" content="#2f5d46">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#dashboard" aria-label="Kosher Protein Planner, dashboard">
+        <img src="favicon.svg" alt="" width="30" height="30">
+        <span>Kosher Protein Planner</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#dashboard" data-nav="dashboard"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span>Dashboard</span></a>
+        <a href="#schedule" data-nav="schedule"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Weekly Schedule</span></a>
+        <a href="#recipes" data-nav="recipes"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg><span>Recipes</span></a>
+        <a href="#shopping" data-nav="shopping"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h2l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22 7H5.1"/></svg><span>Shopping List</span></a>
+        <a href="#budget" data-nav="budget"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><span>Budget Tracker</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="data-problems" class="alert alert-danger container" role="alert" hidden></div>
+
+  <main id="app" class="container" tabindex="-1">
+    <noscript><p class="alert alert-warn">This planner needs JavaScript turned on to calculate your meals, protein and budget.</p></noscript>
+    <section id="view-dashboard" class="view" aria-label="Dashboard"></section>
+    <section id="view-schedule" class="view" aria-label="Weekly schedule" hidden></section>
+    <section id="view-recipes" class="view" aria-label="Recipes" hidden></section>
+    <section id="view-shopping" class="view" aria-label="Shopping list" hidden></section>
+    <section id="view-budget" class="view" aria-label="Budget tracker" hidden></section>
+  </main>
+
+  <footer class="footer container">
+    <p>Grocery prices and protein values are estimates, not live prices or verified nutrition data. Check package labels and your household's kosher standard.</p>
+    <p>Food photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>, credited on each recipe.</p>
+  </footer>
+
+  <!-- Printable shopping list, filled in by script.js right before printing -->
+  <div id="print-list" class="print-only"></div>
+
+  <!-- Recipe details -->
+  <dialog id="recipe-dialog" class="dialog dialog-wide" aria-labelledby="recipe-title">
+    <button class="dialog-close icon-btn" data-action="close-dialog" aria-label="Close recipe"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div class="dialog-body"></div>
+  </dialog>
+
+  <!-- Swap two meals -->
+  <dialog id="swap-dialog" class="dialog" aria-labelledby="swap-title">
+    <div class="dialog-body"></div>
+  </dialog>
+
+  <!-- Add or edit a shopping item -->
+  <dialog id="item-dialog" class="dialog" aria-labelledby="item-title">
+    <div class="dialog-body"></div>
+  </dialog>
+
+  <!-- Confirmation for destructive actions -->
+  <dialog id="confirm-dialog" class="dialog dialog-small" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <div class="dialog-body">
+      <h2 id="confirm-title">Are you sure?</h2>
+      <p id="confirm-message"></p>
+      <div class="btn-row dialog-actions">
+        <button type="button" class="btn" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
