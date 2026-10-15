@@ -346,8 +346,8 @@ select { padding-right: 28px; }
 
 .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 .recipe-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); }
-.rc-photo { position: relative; aspect-ratio: 4 / 3; background: var(--surface-2); }
-.rc-img { width: 100%; height: 100%; object-fit: cover; }
+.rc-photo { position: relative; aspect-ratio: 4 / 3; background: var(--surface-2); overflow: hidden; }
+.rc-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rc-photo .badge { position: absolute; left: 12px; top: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
 .rc-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .rc-body h2 { font-size: 1.3rem; }
@@ -378,8 +378,8 @@ select { padding-right: 28px; }
 .dialog-close { position: absolute; right: 12px; top: 12px; z-index: 2; background: rgba(253, 252, 249, 0.95); }
 
 #recipe-dialog .dialog-body { padding: 0; }
-.rd-hero { aspect-ratio: 16 / 7; background: var(--surface-2); }
-.rd-img { width: 100%; height: 100%; object-fit: cover; }
+.rd-hero { position: relative; aspect-ratio: 16 / 7; background: var(--surface-2); overflow: hidden; border-radius: var(--r-card) var(--r-card) 0 0; }
+.rd-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rd-content { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
 .rd-content h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; margin-top: 6px; }
 .rd-title { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
